@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Clique na imagem</title>
+	<link rel="stylesheet" href="estilo.css">
+</head>
+<body id="fundo" onload="inicia()" text-align="center">
+<script>
+var m = [[9,9,9],[9,9,9],[9,9,9]];
+function getRndInteger(min, max) {
+    return Math.floor(Math.random() * (max - min + 1) ) + min;
+}
+function inicia(){
+	var ini = [0,1,2,3,4,5,6,7,8], cont1, cont2, sM, id, rnd, aux, txt, tab; 
+	for (cont1 = 0; cont1 < 3; cont1++){
+		for (cont2 = 0; cont2 < 3; cont2++){
+			rnd = getRndInteger(0, ini.length - 1);
+			aux = ini[rnd];
+			m[cont1][cont2] = aux;
+			ini.splice(rnd, 1); 
+			id = String(cont1) + "." + String(cont2);
+			sM = String(m[cont1][cont2]);
+			if(aux == 0){
+				tab = document.getElementById(id);
+				tab.src = "";	
+				txt = document.createTextNode("-");
+				tab.parentNode.appendChild(txt);
+			} else {
+				document.getElementById(id).src = aux + ".png";					
+			}
+		}
+	}
+}
+function mudar(a1, a2) {
+	var a1minus, a1plus, a2minus, a2plus, aux, id2, id1, traco, num, txt;
+	a1minus = a1 - 1;
+	a1plus = a1 + 1;
+	a2minus = a2 - 1;
+	a2plus = a2 + 1;
+	if(a1plus <= 2 && m[a1plus][a2] == 0){
+		id2 = String(a1plus) + "." + String(a2);
+		id1 = String(a1) + "." + String(a2);
+		traco = document.getElementById(id2);
+		traco.src = String(m[a1][a2]) + ".png";	
+		txt = traco.parentNode.lastChild;
+		traco.parentNode.removeChild(txt);
+		num = document.getElementById(id1);
+		num.src = "";
+		txt = document.createTextNode("-");
+		num.parentNode.appendChild(txt);
+		aux = m[a1][a2];
+		m[a1][a2] = m[a1plus][a2];
+		m[a1plus][a2] = aux;
+	}
+	else if(a1minus >= 0  && m[a1minus][a2]== 0){
+		id2 = String(a1minus) + "." + String(a2);
+		id1 = String(a1) + "." + String(a2);					
+		traco = document.getElementById(id2);
+		traco.src = String(m[a1][a2]) + ".png";	
+		txt = traco.parentNode.lastChild;
+		traco.parentNode.removeChild(txt);
+		num = document.getElementById(id1);
+		num.src = "";
+		txt = document.createTextNode("-");
+		num.parentNode.appendChild(txt);
+		aux = m[a1][a2];
+		m[a1][a2] = m[a1minus][a2];
+		m[a1minus][a2] = aux;	
+
+	}
+	else if(a2minus >= 0 && m[a1][a2minus] == 0){
+		id2 = String(a1) + "." + String(a2minus);
+		id1 = String(a1) + "." + String(a2);			
+		traco = document.getElementById(id2);
+	
+		traco.src = String(m[a1][a2]) + ".png";	
+		txt = traco.parentNode.lastChild;
+		traco.parentNode.removeChild(txt);
+		num = document.getElementById(id1);
+		num.src = "";
+		txt = document.createTextNode("-");
+		num.parentNode.appendChild(txt);	
+		aux = m[a1][a2];
+		m[a1][a2] = m[a1][a2minus];
+		m[a1][a2minus] = aux;	
+	}
+	else if(a2plus <= 2 && m[a1][a2plus]== 0){
+		id2 = a1 + "." + String(a2plus);
+		id1 = String(a1) + "." + String(a2);		
+		traco = document.getElementById(id2);
+
+		traco.src = String(m[a1][a2]) + ".png";	
+		txt = traco.parentNode.lastChild;
+		traco.parentNode.removeChild(txt);
+		num = document.getElementById(id1);
+		num.src = "";
+		txt = document.createTextNode("-");
+		num.parentNode.appendChild(txt);
+		aux = m[a1][a2];
+		m[a1][a2] = m[a1][a2plus];
+		m[a1][a2plus] = aux;	
+	}
+}
+</script>
+<h1 align="center">Clique na imagem</h1>
+<table align="center" style="text-align:center">
+<tr>
+  <td><img src="" id="0.0" onclick="mudar(0, 0)"></td> 
+  <td><img src="" id="0.1" onclick="mudar(0, 1)"></td>
+  <td><img src="" id="0.2" onclick="mudar(0, 2)"></td>
+</tr>
+<tr>
+  <td><img src="" id="1.0" onclick="mudar(1, 0)"></td>
+  <td><img src="" id="1.1" onclick="mudar(1, 1)"></td>
+  <td><img src="" id="1.2" onclick="mudar(1, 2)"></td>
+</tr>
+<tr>
+  <td><img src="" id="2.0" onclick="mudar(2, 0)"></td>
+  <td><img src="" id="2.1" onclick="mudar(2, 1)"></td>
+  <td><img src="" id="2.2" onclick="mudar(2, 2)"></td>
+</tr>
+</table>
+</body>
+</html>
